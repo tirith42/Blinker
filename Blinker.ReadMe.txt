@@ -1,0 +1,25 @@
+Blinker
+A drive activity light utility for Windows and the technically paranoid.
+------------------------------------------------------------------------
+Source code is released under the GPL 3.0 open source license.
+http://www.gnu.org/licenses/gpl.html
+
+This utility is built for and targets the .NET 2.0 library. It has been
+built and tested with .NET 4.0 as well, and works fine. It even runs 
+well on Windows 8, and as far back as Windows XP.
+
+This utility was originally written because the brains at Dell decided
+that on the back of their XPS 15 laptop, where you can't see it with
+the display open, would be a good place to locate the drive access LED.
+I am addicted to the drive access LED, so I know if my machine is busy
+or just siting there thumbing its nose at me.
+
+As it turns out, this utility is very handy where you don't get a 
+drive access light, such as on VMs (I use it on Azure VMs as well as
+more traditional VMs), ad on Windows-based tablets like the Microsoft 
+Surface.
+
+Have fun. Hack away.
+
+Tony Martin
+tony@noeticart.com
