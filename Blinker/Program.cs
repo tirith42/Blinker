@@ -134,7 +134,7 @@ namespace Blinker
         /// Checks the list of actual drives for the passed in drive to see if it exists.
         /// </summary>
         /// <param name="d">The drive to check for (in the format "0 C:").</param>
-        /// <returns></returns>
+        /// <returns>True if the drive is available, false if not</returns>
         private bool IsDriveAvailable(string d)
         {
             foreach (string drive in allDrives)
@@ -185,6 +185,7 @@ namespace Blinker
         /// </summary>
         private void LoadDriveList()
         {
+            // Make sure we have a drive list to work with
             if (allDrives == null)
             {
                 allDrives = new List<string>();
@@ -225,7 +226,7 @@ namespace Blinker
             Visible = false;        // Hide the useless default form.
             ShowInTaskbar = false;  // Make sure we stay out of the Windows taskbar.
 
-            // Show the splash.
+            // Show the splash, if we need to.
             if (showSplash)
             {
                 BlinkerSplashForm splash = new BlinkerSplashForm();
