@@ -71,9 +71,10 @@ namespace Blinker
             // Create the context menu and its items.
             BlinkerMenu = new ContextMenuStrip();
             BlinkerMenu.Items.Add("Settings");
-            BlinkerMenu.Items.Add("Collect Garbage");
+            // Don't need this any more
+            // BlinkerMenu.Items.Add("Collect Garbage");
             BlinkerMenu.Items.Add("About");
-            BlinkerMenu.Items.Add("-");
+            BlinkerMenu.Items.Add("-");  // Separator
             BlinkerMenu.Items.Add("Exit");
 
             // Create the timer.
@@ -226,7 +227,7 @@ namespace Blinker
             Visible = false;        // Hide the useless default form.
             ShowInTaskbar = false;  // Make sure we stay out of the Windows taskbar.
 
-            // Show the splash, if we need to.
+            // Show the splash, if we need to.  
             if (showSplash)
             {
                 BlinkerSplashForm splash = new BlinkerSplashForm();
