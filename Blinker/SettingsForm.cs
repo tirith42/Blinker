@@ -49,6 +49,7 @@ namespace Blinker
         /// <param name="drives">A list of drives available from the PerfMon library.</param>
         public SettingsForm(List<string> drives)
         {
+            // If supplied list is empty, toss an exception. Otherwise, set the list.
             if (drives == null)
             {
                 throw new ArgumentNullException();
@@ -94,6 +95,7 @@ namespace Blinker
         /// <param name="d">The drive to which the drive combobox should be set.</param>
         private void SetDrive(string d)
         {
+            // Validate input
             if (d.Length < 2)
             {
                 throw new ArgumentException(String.Format("The drive value passed in ('{0}') is not valid.", d));
