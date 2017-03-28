@@ -13,11 +13,6 @@
 // License:   GPL 3.0
 // ------------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Blinker
@@ -40,6 +35,11 @@ namespace Blinker
         private void AboutForm_Load(object sender, EventArgs e)
         {
             pictureBox1.Image = BlinkerResources.BlinkerSplash;
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/tirith42/Blinker.git");
         }
     }
 }

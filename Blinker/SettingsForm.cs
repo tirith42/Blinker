@@ -8,16 +8,12 @@
 //
 // Author:    Tony Martin
 // Github ID: tirith42
-// Email:     tony@noeticart.com
+// Email:     tirith42@gmail.com
 // Source:    https://github.com/tirith42/Blinker.git
 // License:   GPL 3.0
 // ------------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Blinker
@@ -41,6 +37,8 @@ namespace Blinker
         private string m_LEDcolor;
         private string m_Drive;
         private bool m_ShowSplash;
+        private int m_updateInterval;
+
         private DialogExitType m_ExitType = DialogExitType.Cancel;
 
         /// <summary>
@@ -87,6 +85,7 @@ namespace Blinker
             SetDrive(m_Drive);
             SetColor(m_LEDcolor);
             SetSplash(m_ShowSplash);
+            SetInterval(m_updateInterval);
         }
 
         /// <summary>
@@ -145,6 +144,15 @@ namespace Blinker
         }
 
         /// <summary>
+        /// Setes teh value for the Accuracy (Update Interval) slider control.
+        /// </summary>
+        /// <param name="newInterval">New vaue for the slider, from 1 to 100.</param>
+        private void SetInterval(int newInterval)
+        {
+            IntervalSlider.Value = newInterval;
+        }
+
+        /// <summary>
         /// Gets or sets the user-selected icon color.
         /// </summary>
         public string LEDColor
@@ -169,6 +177,25 @@ namespace Blinker
         {
             get { return m_ShowSplash; }
             set { m_ShowSplash = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Update Interval value.
+        /// </summary>
+        public int UpdateInterval
+        {
+            get { return m_updateInterval; }
+            set
+            {
+                if (value < 1 || value > 1000)
+                {
+                    throw new ArgumentOutOfRangeException("UpdateInterval", "The value provided for the UpdateInterval is out of range");
+                }
+                else
+                {
+                    m_updateInterval = value;
+                }
+            }
         }
 
         /// <summary>
@@ -214,6 +241,11 @@ namespace Blinker
             m_Drive = d.id + " " + d.value;
         }
 
+        /// <summary>
+        /// Handles a click on the Cancel button. Abandons all changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -238,6 +270,16 @@ namespace Blinker
         private void SplashCheck_CheckedChanged(object sender, EventArgs e)
         {
             m_ShowSplash = SplashCheck.Checked;
+        }
+
+        /// <summary>
+        /// Handles a change to the Update Interval slider. Updates the internal private variable.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void IntervalSlider_ValueChanged(object sender, EventArgs e)
+        {
+            m_updateInterval = IntervalSlider.Value;
         }
     }
 

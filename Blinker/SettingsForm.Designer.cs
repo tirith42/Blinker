@@ -39,7 +39,12 @@
             this.PreviewImage = new System.Windows.Forms.PictureBox();
             this.SplashCheck = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.UpdateIntervalLabel = new System.Windows.Forms.Label();
+            this.IntervalSlider = new System.Windows.Forms.TrackBar();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IntervalSlider)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -75,7 +80,7 @@
             // DoneButton
             // 
             this.DoneButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.DoneButton.Location = new System.Drawing.Point(131, 174);
+            this.DoneButton.Location = new System.Drawing.Point(131, 260);
             this.DoneButton.Name = "DoneButton";
             this.DoneButton.Size = new System.Drawing.Size(75, 23);
             this.DoneButton.TabIndex = 6;
@@ -87,7 +92,7 @@
             // CancelButton
             // 
             this.CancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.CancelButton.Location = new System.Drawing.Point(212, 174);
+            this.CancelButton.Location = new System.Drawing.Point(212, 260);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 7;
@@ -126,8 +131,9 @@
             // 
             // SplashCheck
             // 
+            this.SplashCheck.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.SplashCheck.AutoSize = true;
-            this.SplashCheck.Location = new System.Drawing.Point(16, 135);
+            this.SplashCheck.Location = new System.Drawing.Point(16, 221);
             this.SplashCheck.Name = "SplashCheck";
             this.SplashCheck.Size = new System.Drawing.Size(175, 17);
             this.SplashCheck.TabIndex = 11;
@@ -137,21 +143,63 @@
             // 
             // panel1
             // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel1.Location = new System.Drawing.Point(-1, 163);
+            this.panel1.Location = new System.Drawing.Point(-1, 249);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(301, 46);
             this.panel1.TabIndex = 12;
+            // 
+            // UpdateIntervalLabel
+            // 
+            this.UpdateIntervalLabel.AutoSize = true;
+            this.UpdateIntervalLabel.Location = new System.Drawing.Point(13, 127);
+            this.UpdateIntervalLabel.Name = "UpdateIntervalLabel";
+            this.UpdateIntervalLabel.Size = new System.Drawing.Size(211, 13);
+            this.UpdateIntervalLabel.TabIndex = 13;
+            this.UpdateIntervalLabel.Text = "&Accuracy (higher=more resource intensive):";
+            // 
+            // IntervalSlider
+            // 
+            this.IntervalSlider.Location = new System.Drawing.Point(12, 143);
+            this.IntervalSlider.Maximum = 100;
+            this.IntervalSlider.Minimum = 1;
+            this.IntervalSlider.Name = "IntervalSlider";
+            this.IntervalSlider.Size = new System.Drawing.Size(275, 45);
+            this.IntervalSlider.TabIndex = 14;
+            this.IntervalSlider.TickFrequency = 10;
+            this.IntervalSlider.Value = 1;
+            this.IntervalSlider.ValueChanged += new System.EventHandler(this.IntervalSlider_ValueChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(17, 181);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(36, 13);
+            this.label2.TabIndex = 15;
+            this.label2.Text = "higher";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(251, 181);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(32, 13);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "lower";
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(299, 208);
+            this.ClientSize = new System.Drawing.Size(299, 294);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.IntervalSlider);
+            this.Controls.Add(this.UpdateIntervalLabel);
             this.Controls.Add(this.SplashCheck);
             this.Controls.Add(this.PreviewImage);
             this.Controls.Add(this.ColorCombo);
@@ -170,6 +218,7 @@
             this.Text = "Blinker Settings";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.IntervalSlider)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -187,5 +236,9 @@
         private System.Windows.Forms.PictureBox PreviewImage;
         private System.Windows.Forms.CheckBox SplashCheck;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label UpdateIntervalLabel;
+        private System.Windows.Forms.TrackBar IntervalSlider;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

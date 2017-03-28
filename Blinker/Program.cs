@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
 using System.Configuration;
-using System.IO;
 
 namespace Blinker
 {
@@ -44,7 +43,8 @@ namespace Blinker
 
         private string LEDcolor = "red";                // Stores the current color of the "LED" indicator.
         private string drive = "0 C:";                  // Stores the current drive being monitored.
-        private bool showSplash = true;                 // Stores app setting: show the splash at startup
+        private bool showSplash = true;                 // Stores app setting: show the splash at startup.
+        private int updateInterval = 10;                // Number of ticks to wait between data updates.
         private AppSettingsSection appSettingSection;   // Used to read/write application settings from app.config.
         private System.Configuration.Configuration config;
         private List<string> allDrives = null;          // List of all drives reported by PerfMon.
@@ -79,7 +79,7 @@ namespace Blinker
 
             // Create the timer.
             BlinkerTimer = new Timer();
-            BlinkerTimer.Interval = 1;
+            BlinkerTimer.Interval = updateInterval;
             BlinkerTimer.Tick += new EventHandler(BlinkerTimer_Tick);
 
             // Hook up the context menu and its required events.
@@ -111,6 +111,7 @@ namespace Blinker
             LEDcolor = appSettingSection.Settings["ledcolor"].Value;
             drive = appSettingSection.Settings["drive"].Value;
             showSplash = Convert.ToBoolean(appSettingSection.Settings["showSplash"].Value);
+            updateInterval = Convert.ToInt16(appSettingSection.Settings["updateInterval"].Value);
             
             // Update the "On" icon to the user-selected color.
             SetIconColor();
@@ -172,12 +173,16 @@ namespace Blinker
             appSettingSection.Settings["ledcolor"].Value = LEDcolor;
             appSettingSection.Settings["drive"].Value = drive;
             appSettingSection.Settings["showSplash"].Value = showSplash.ToString();
+            appSettingSection.Settings["updateInterval"].Value = updateInterval.ToString();
             config.Save();
 
             // Make the new settings active.
             SetIconColor();
             diskIO.InstanceName = drive;
             SetTooltip();
+            BlinkerTimer.Enabled = false;
+            BlinkerTimer.Interval = updateInterval;
+            BlinkerTimer.Enabled = true;
         }
 
         /// <summary>
@@ -237,6 +242,10 @@ namespace Blinker
             base.OnLoad(e);
         }
 
+        /// <summary>
+        /// Clean up resources.
+        /// </summary>
+        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -295,6 +304,7 @@ namespace Blinker
             sf.LEDColor = LEDcolor;
             sf.Drive = drive;
             sf.ShowSplash = showSplash;
+            sf.UpdateInterval = updateInterval;
 
             // Display the dialog.
             sf.ShowDialog();
@@ -305,12 +315,13 @@ namespace Blinker
                 LEDcolor = sf.LEDColor;
                 drive = sf.Drive;
                 showSplash = sf.ShowSplash;
+                updateInterval = sf.UpdateInterval;
                 SaveSettings();
             }
         }
 
         /// <summary>
-        /// Reads current disk activity every millisecond, and updates the LED display appropriately.
+        /// Reads current disk activity every so often, and updates the LED display appropriately.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -354,7 +365,6 @@ namespace Blinker
             {
                 case "SETTINGS": OnSettings(); break;
                 case "ABOUT": OnAbout(); break;
-                case "COLLECT GARBAGE": OnCollect(); break;
                 case "EXIT": OnExit(); break;
                 default: break;
             }
